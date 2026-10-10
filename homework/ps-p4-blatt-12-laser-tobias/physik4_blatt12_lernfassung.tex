@@ -1,0 +1,1818 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Physik IV - Blatt 12 Lernfassung / Abgabe / Tafelvortrag
+% Standalone university LaTeX template -- one-file version
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[11pt,a4paper]{scrartcl}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Embedded file: includes/university_metadata.tex
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\CourseTitle}{COURSE NAME}
+\newcommand{\CourseShortTitle}{COURSE SHORT NAME}
+\newcommand{\DocumentKind}{DOCUMENT KIND}
+\newcommand{\DocumentTitle}{DOCUMENT TITLE}
+\newcommand{\DocumentSubtitle}{}
+\newcommand{\AuthorName}{YOUR NAME}
+\newcommand{\InstitutionName}{INSTITUTION NAME}
+\newcommand{\SubmissionDate}{\today}
+
+\newcommand{\makeuniversitytitle}{%
+    \begin{titlepage}
+        \centering
+        \vspace*{2cm}
+        {\Large \CourseTitle\par}
+        \vspace{1.2cm}
+        {\huge\bfseries \DocumentTitle\par}
+        \ifx\DocumentSubtitle\empty\else
+            \vspace{0.4cm}
+            {\Large \DocumentSubtitle\par}
+        \fi
+        \vspace{1cm}
+        {\Large \DocumentKind\par}
+        \vfill
+        {\large \AuthorName\par}
+        \vspace{0.2cm}
+        {\large \InstitutionName\par}
+        \vspace{0.8cm}
+        {\large \SubmissionDate\par}
+    \end{titlepage}
+    \pagenumbering{arabic}
+}
+
+\newcommand{\makechaptertitle}{%
+    \begin{center}
+        {\Large \CourseTitle\par}
+        \vspace{0.5cm}
+        {\huge\bfseries \DocumentTitle\par}
+        \ifx\DocumentSubtitle\empty\else
+            \vspace{0.25cm}
+            {\Large \DocumentSubtitle\par}
+        \fi
+        \vspace{0.5cm}
+        {\large \AuthorName \hfill \SubmissionDate\par}
+    \end{center}
+    \vspace{0.5cm}
+}
+
+\newcommand{\makephysiktitle}{\makeuniversitytitle}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Document metadata
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\CourseTitle}{Physik IV: Kerne und Teilchen}
+\renewcommand{\CourseShortTitle}{Physik IV}
+\renewcommand{\DocumentKind}{Hausaufgabe, Tafelvortrag und Lernfassung}
+\renewcommand{\DocumentTitle}{Aufgabenblatt 12}
+\renewcommand{\DocumentSubtitle}{Feynman-Diagramme, Isospin und Erhaltungss\"atze}
+\renewcommand{\AuthorName}{Tobias Laser}
+\renewcommand{\InstitutionName}{Universit\"at Innsbruck}
+\renewcommand{\SubmissionDate}{16. Juni 2026}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Embedded file: includes/university_packages.tex
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[margin=2.5cm]{geometry}
+\usepackage[onehalfspacing]{setspace}
+\usepackage{scrlayer-scrpage}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{csquotes}
+
+\usepackage{amsmath,amsthm,amssymb,mathtools}
+\usepackage{bm}
+\usepackage{icomma}
+\usepackage{cancel}
+
+\usepackage{graphicx}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,calc,decorations.pathmorphing,positioning,patterns,angles,quotes}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+
+\usepackage[locale=DE,space-before-unit=true,per-mode=symbol,separate-uncertainty=true]{siunitx}
+\usepackage{booktabs,multirow,array,tabularx,longtable}
+\usepackage{caption,subcaption}
+\usepackage{placeins}
+\usepackage{enumitem}
+\usepackage{xparse}
+
+\usepackage[most]{tcolorbox}
+\tcbuselibrary{breakable,skins,theorems}
+
+\usepackage[breaklinks=true,colorlinks=true,linkcolor=blue,urlcolor=blue,citecolor=blue]{hyperref}
+\usepackage[nameinlink,noabbrev]{cleveref}
+
+\clearpairofpagestyles
+\ihead{\CourseShortTitle}
+\ohead{\DocumentKind}
+\cfoot{\pagemark}
+\pagestyle{scrheadings}
+
+\setlist[enumerate]{itemsep=0.4em,topsep=0.4em}
+\setlist[itemize]{itemsep=0.25em,topsep=0.35em}
+\captionsetup{font=small,labelfont=bf}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Embedded file: includes/university_macros.tex
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\C}{\mathbb{C}}
+
+\newcommand{\set}[1]{\left\{ #1 \right\}}
+\newcommand{\abs}[1]{\left| #1 \right|}
+\newcommand{\norm}[1]{\left\lVert #1 \right\rVert}
+\newcommand{\avg}[1]{\left\langle #1 \right\rangle}
+\newcommand{\ket}[1]{\left| #1 \right\rangle}
+\newcommand{\bra}[1]{\left\langle #1 \right|}
+\newcommand{\braket}[2]{\left\langle #1 \middle| #2 \right\rangle}
+\newcommand{\paren}[1]{\left( #1 \right)}
+\newcommand{\bracket}[1]{\left[ #1 \right]}
+\newcommand{\ol}[1]{\overline{#1}}
+
+\newcommand{\dd}{\,\mathrm{d}}
+\newcommand{\dv}[2]{\frac{\dd #1}{\dd #2}}
+\newcommand{\pdv}[2]{\frac{\partial #1}{\partial #2}}
+\newcommand{\pddv}[2]{\frac{\partial^2 #1}{\partial #2^2}}
+\newcommand{\evalat}[2]{\left. #1 \right|_{#2}}
+
+\newcommand{\vect}[1]{\bm{#1}}
+\newcommand{\unitvect}[1]{\hat{\bm{#1}}}
+\newcommand{\grad}{\vect{\nabla}}
+\newcommand{\divergence}{\grad\!\cdot}
+\newcommand{\curl}{\grad\!\times}
+
+\newcommand{\half}{\frac{1}{2}}
+\newcommand{\third}{\frac{1}{3}}
+\newcommand{\twothirds}{\frac{2}{3}}
+\newcommand{\hbarc}{\hbar c}
+\newcommand{\alphaf}{\alpha}
+\newcommand{\eV}{\si{eV}}
+\newcommand{\MeV}{\si{MeV}}
+\newcommand{\GeV}{\si{GeV}}
+\newcommand{\TeV}{\si{TeV}}
+
+\newcommand{\nuclide}[3]{^{#1}_{#2}\mathrm{#3}}
+\newcommand{\isotope}[2]{^{#1}\mathrm{#2}}
+\newcommand{\anti}[1]{\overline{#1}}
+\newcommand{\pbar}{\anti{p}}
+\newcommand{\nbar}{\anti{n}}
+\newcommand{\ee}{e^-}
+\newcommand{\ep}{e^+}
+\newcommand{\mup}{\mu^+}
+\newcommand{\mum}{\mu^-}
+\newcommand{\nue}{\nu_e}
+\newcommand{\numu}{\nu_\mu}
+\newcommand{\nueb}{\overline{\nu}_e}
+\newcommand{\numub}{\overline{\nu}_\mu}
+\newcommand{\nutau}{\nu_\tau}
+\newcommand{\pionp}{\pi^+}
+\newcommand{\pionm}{\pi^-}
+\newcommand{\pionz}{\pi^0}
+\newcommand{\kaonp}{K^+}
+\newcommand{\kaonm}{K^-}
+\newcommand{\kaonz}{K^0}
+
+\newcommand{\diffxs}{\frac{\dd\sigma}{\dd\Omega}}
+\newcommand{\totalxs}{\sigma_{\mathrm{total}}}
+\newcommand{\lum}{\mathcal{L}}
+\newcommand{\smand}{s}
+\newcommand{\tmand}{t}
+\newcommand{\umand}{u}
+\newcommand{\Ecm}{E_{\mathrm{CM}}}
+
+\newcommand{\ie}{d.\,h.}
+\newcommand{\eg}{z.\,B.}
+\newcommand{\wrt}{bez\"uglich}
+
+\DeclareSIUnit{\barn}{b}
+\DeclareSIUnit{\millibarn}{mb}
+\DeclareSIUnit{\microbarn}{\micro b}
+\DeclareSIUnit{\nanobarn}{nb}
+\DeclareSIUnit{\fermi}{fm}
+\DeclareSIUnit{\year}{a}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Embedded file: includes/university_boxes.tex
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\tcbset{
+    unibox/.style={
+        enhanced,
+        breakable,
+        sharp corners,
+        boxrule=0.6pt,
+        left=1.2mm,
+        right=1.2mm,
+        top=1mm,
+        bottom=1mm,
+        before skip=0.8em,
+        after skip=0.8em,
+        fonttitle=\bfseries
+    }
+}
+
+\newtcolorbox{calculationbox}[1][]{unibox,title=Rechnung,colback=black!2,colframe=black!55,#1}
+\newtcolorbox{sidecalcbox}[1][]{unibox,title=Nebenrechnung,colback=black!1,colframe=black!40,#1}
+\newtcolorbox{solutionbox}[1][]{unibox,title=L\"osung,colback=blue!2,colframe=blue!45!black,#1}
+\newtcolorbox{answerbox}[1][]{unibox,title=Antwort,colback=green!3,colframe=green!45!black,#1}
+\newtcolorbox{notebox}[1][]{unibox,title=Notiz,colback=yellow!6,colframe=yellow!45!black,#1}
+\newtcolorbox{definitionbox}[1][]{unibox,title=Definition,colback=cyan!3,colframe=cyan!45!black,#1}
+\newtcolorbox{warningbox}[1][]{unibox,title=Achtung,colback=red!3,colframe=red!55!black,#1}
+\newtcolorbox{summarybox}[1][]{unibox,title=Zusammenfassung,colback=violet!3,colframe=violet!50!black,#1}
+\newtcolorbox{formulabox}[1][]{unibox,title=Formel,colback=orange!4,colframe=orange!65!black,#1}
+\newtcolorbox{taskbox}[1][]{unibox,title=Aufgabe,colback=white,colframe=black!75,#1}
+\newtcolorbox{talkbox}[1][]{unibox,title=Tafelvortrag,colback=teal!3,colframe=teal!50!black,#1}
+\newtcolorbox{learningbox}[1][]{unibox,title=Lernidee,colback=purple!3,colframe=purple!50!black,#1}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Embedded file: includes/university_theorems.tex
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{example}{Beispiel}[section]
+
+\theoremstyle{plain}
+\newtheorem{satz}{Satz}[section]
+\newtheorem{lemma}{Lemma}[section]
+
+\theoremstyle{remark}
+\newtheorem*{remark}{Bemerkung}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Small TikZ helper styles
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\tikzset{
+    fermion/.style={-Latex,thick},
+    antifermion/.style={Latex-,thick},
+    boson/.style={decorate,decoration={snake,amplitude=1.2mm,segment length=4mm},thick},
+    vertex/.style={circle,fill=black,inner sep=1.2pt}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+
+\makeuniversitytitle
+\tableofcontents
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Einordnung des Blattes}
+\addcontentsline{toc}{section}{Einordnung des Blattes}
+
+\begin{summarybox}[title=Ziel dieses Blattes]
+Dieses Blatt verbindet drei zentrale Themen der Teilchenphysik:
+\begin{itemize}
+    \item \textbf{Feynman-Diagramme} für die geladene schwache Wechselwirkung,
+    \item \textbf{Isospin} und die Zerlegung von Pion-Nukleon-Zuständen in Gesamtisospin-Eigenzustände,
+    \item \textbf{Erhaltungssätze} als schnelle Methode, um Zerfälle und Reaktionen zu prüfen.
+\end{itemize}
+Der wichtigste konzeptionelle Punkt ist: Bei Vertizes müssen Ladung, Teilchentypen und Pfeilrichtungen konsistent sein. Beim Isospin rechnet man formal wie bei Drehimpulsen. Bei Erhaltungssätzen prüft man systematisch jede Quantenzahl.
+\end{summarybox}
+
+\begin{notebox}[title=Konventionen]
+In diesem Dokument verwenden wir:
+\[
+    Q(p)=+1,\qquad Q(n)=0,\qquad Q(\pionp)=+1,\qquad Q(\pionz)=0,\qquad Q(\pionm)=-1.
+\]
+Für Antiteilchen gilt: additive Quantenzahlen wie Ladung, Baryonenzahl und Leptonenzahl wechseln das Vorzeichen.
+\[
+    B(q)=\frac{1}{3},\qquad B(\bar q)=-\frac{1}{3},
+    \qquad
+    L(\ell^-)=+1,\qquad L(\ell^+)=-1.
+\]
+\end{notebox}
+
+\FloatBarrier
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Aufgabe 1: Feynman-Diagramme f\"ur Fortgeschrittene}
+
+\begin{taskbox}
+Wir wollen uns ein weiteres Mal mit Feynman-Diagrammen beschäftigen. Dabei soll es insbesondere darum gehen, die schwache Wechselwirkung mit in die Darstellung einzubinden, wobei wir uns hier auf die geladenen Ströme fokussieren wollen. In dieser Aufgabe nehmen wir jeweils an, dass die Zeit nach rechts orientiert ist.
+
+\begin{enumerate}[label=(\alph*)]
+    \item Stellen Sie analog zur QED die zwei Basis-Vertizes für die schwache Wechselwirkung mit einem W-Boson als Austauschteilchen auf.
+    \item Finden Sie daraus verschiedene Realisierungen solcher Vertizes bei unterschiedlicher Orientierung.
+    \item Welche Entsprechung gilt also bei der zweiten Generation?
+    \item Stellen Sie damit die Basis-Vertizes für die entsprechenden Wechselwirkungen auf.
+    \item Versuchen Sie damit den Zerfall $\pionm\to\mum+\numub$ darzustellen.
+    \item Können Sie damit auch den Zerfall $\kaonm\to\mum+\numub$ als Feynman-Diagramm darstellen?
+    \item Diskutieren Sie, inwiefern Ihnen die Quark-Mischung
+    \[
+        d'=d\cos\theta_c+s\sin\theta_c,
+        \qquad
+        s'=-d\sin\theta_c+s\cos\theta_c
+    \]
+    weiterhelfen kann.
+\end{enumerate}
+\end{taskbox}
+
+\subsection{Lernteil: Geladene schwache Wechselwirkung}
+
+\begin{learningbox}
+Bei der QED koppelt ein Photon an ein geladenes Fermion, aber es ändert dabei nicht die Teilchensorte:
+\[
+    e^-\to e^-+\gamma.
+\]
+Bei der geladenen schwachen Wechselwirkung koppelt ein $W^\pm$-Boson dagegen an Paare innerhalb eines schwachen Dubletts:
+\[
+    \begin{pmatrix}
+    \nu_e\\ e^-
+    \end{pmatrix},
+    \qquad
+    \begin{pmatrix}
+    \nu_\mu\\ \mu^-
+    \end{pmatrix},
+    \qquad
+    \begin{pmatrix}
+    u\\ d
+    \end{pmatrix},
+    \qquad
+    \begin{pmatrix}
+    c\\ s
+    \end{pmatrix}.
+\]
+Das $W$-Boson trägt elektrische Ladung. Deshalb kann sich am Vertex die Teilchensorte ändern, solange die elektrische Ladung erhalten bleibt.
+\end{learningbox}
+
+\subsection{Abgabe: Ausf\"uhrliche L\"osung}
+
+\begin{enumerate}[label=(\alph*)]
+    \item \textbf{Basis-Vertizes f\"ur Leptonen.}
+
+    \begin{calculationbox}
+        Für geladene schwache Leptonströme lautet die Grundstruktur:
+        \[
+            W^- \leftrightarrow \ell^-+\overline{\nu}_\ell,
+            \qquad
+            W^+ \leftrightarrow \ell^+ + \nu_\ell,
+        \]
+        wobei
+        \[
+            \ell=e,\mu,\tau.
+        \]
+        Für die erste Generation sind also die zwei Basis-Vertizes:
+        \[
+            W^- \leftrightarrow e^-+\overline{\nu}_e,
+            \qquad
+            W^+ \leftrightarrow e^+ + \nu_e.
+        \]
+        Man kann dieselbe Information auch als Umwandlung innerhalb des Dubletts schreiben:
+        \[
+            e^- \leftrightarrow \nu_e + W^-,
+            \qquad
+            \nu_e \leftrightarrow e^- + W^+.
+        \]
+    \end{calculationbox}
+
+    \begin{calculationbox}[title=Diagrammatische Darstellung]
+    \begin{center}
+    \begin{tikzpicture}[scale=1.0]
+        \node[vertex] (v1) at (0,0) {};
+        \draw[boson] (-2,0) -- (v1) node[midway,above] {$W^-$};
+        \draw[fermion] (v1) -- (2,0.8) node[right] {$e^-$};
+        \draw[antifermion] (v1) -- (2,-0.8) node[right] {$\overline{\nu}_e$};
+
+        \node[vertex] (v2) at (6,0) {};
+        \draw[boson] (4,0) -- (v2) node[midway,above] {$W^+$};
+        \draw[fermion] (v2) -- (8,0.8) node[right] {$\nu_e$};
+        \draw[antifermion] (v2) -- (8,-0.8) node[right] {$e^+$};
+    \end{tikzpicture}
+    \end{center}
+    \end{calculationbox}
+
+    \begin{answerbox}
+        Die beiden Basis-Vertizes der geladenen schwachen Wechselwirkung für die erste Leptonengeneration sind
+        \[
+            \boxed{W^- \leftrightarrow e^-+\overline{\nu}_e}
+            \qquad\text{und}\qquad
+            \boxed{W^+ \leftrightarrow e^+ + \nu_e}.
+        \]
+    \end{answerbox}
+
+    \item \textbf{Verschiedene Realisierungen durch unterschiedliche Orientierung.}
+
+    \begin{calculationbox}
+        Da ein Feynman-Vertex formal in verschiedene Richtungen gelesen werden kann, erhält man durch Umorientieren beziehungsweise Crossing verschiedene physikalische Prozesse.
+
+        Aus
+        \[
+            W^- \leftrightarrow e^-+\overline{\nu}_e
+        \]
+        kann man zum Beispiel lesen:
+        \[
+            W^- \to e^-+\overline{\nu}_e,
+        \]
+        \[
+            e^- \to W^-+\nu_e,
+        \]
+        \[
+            \overline{\nu}_e \to W^-+e^+,
+        \]
+        oder als Streuvertex
+        \[
+            e^-+\overline{\nu}_e \to W^-.
+        \]
+
+        Aus
+        \[
+            W^+ \leftrightarrow e^+ + \nu_e
+        \]
+        folgt analog:
+        \[
+            W^+ \to e^+ + \nu_e,
+        \]
+        \[
+            e^+ \to W^+ + \overline{\nu}_e,
+        \]
+        \[
+            \nu_e \to W^+ + e^-,
+        \]
+        \[
+            e^+ + \nu_e \to W^+.
+        \]
+    \end{calculationbox}
+
+    \begin{warningbox}[title=Pfeilrichtungen richtig lesen]
+        Bei Fermionlinien zeigen Pfeile nicht einfach die Bewegungsrichtung des Teilchens. Ein Antiteilchen kann als Teilchenlinie mit entgegengesetzter Pfeilrichtung dargestellt werden. Für die Aufgaben reicht meist: Ladung und Leptonenzahl müssen am Vertex stimmen.
+    \end{warningbox}
+
+    \begin{answerbox}
+        Unterschiedliche Orientierungen beschreiben keine neuen Grundwechselwirkungen, sondern verschiedene physikalische Lesarten desselben Basis-Vertex. Entscheidend ist immer:
+        \[
+            \boxed{\text{Am Vertex sind Ladung, Leptonenzahl und Teilchenart konsistent.}}
+        \]
+    \end{answerbox}
+
+    \item \textbf{Entsprechung bei der zweiten Generation.}
+
+    \begin{calculationbox}
+        Für die erste Generation wurde die Lepton-Quark-Analogie angegeben als
+        \[
+            \begin{pmatrix}
+            \nu_e\\ e^-
+            \end{pmatrix}
+            \leftrightarrow
+            \begin{pmatrix}
+            u\\ d
+            \end{pmatrix}.
+        \]
+        Die zweite Leptonengeneration ist
+        \[
+            \begin{pmatrix}
+            \nu_\mu\\ \mu^-
+            \end{pmatrix}.
+        \]
+        Die entsprechende zweite Quarkgeneration ist
+        \[
+            \begin{pmatrix}
+            c\\ s
+            \end{pmatrix}.
+        \]
+        Also lautet die Analogie:
+        \[
+            \begin{pmatrix}
+            \nu_\mu\\ \mu^-
+            \end{pmatrix}
+            \leftrightarrow
+            \begin{pmatrix}
+            c\\ s
+            \end{pmatrix}.
+        \]
+    \end{calculationbox}
+
+    \begin{answerbox}
+        Bei der zweiten Generation gilt
+        \[
+            \boxed{
+            \begin{pmatrix}
+            \nu_\mu\\ \mu^-
+            \end{pmatrix}
+            \leftrightarrow
+            \begin{pmatrix}
+            c\\ s
+            \end{pmatrix}}
+        \]
+        analog zu
+        \[
+            \begin{pmatrix}
+            \nu_e\\ e^-
+            \end{pmatrix}
+            \leftrightarrow
+            \begin{pmatrix}
+            u\\ d
+            \end{pmatrix}.
+        \]
+    \end{answerbox}
+
+    \item \textbf{Basis-Vertizes f\"ur Quarks.}
+
+    \begin{calculationbox}
+        Für Quarks koppelt das $W$-Boson einen Up-Typ-Quark an einen Down-Typ-Quark. Ohne Quarkmischung gilt in der vereinfachten Darstellung:
+        \[
+            W^+ \leftrightarrow u+\overline d,
+            \qquad
+            W^- \leftrightarrow d+\overline u,
+        \]
+        und für die zweite Generation:
+        \[
+            W^+ \leftrightarrow c+\overline s,
+            \qquad
+            W^- \leftrightarrow s+\overline c.
+        \]
+        Äquivalent kann man schreiben:
+        \[
+            d\to u+W^-,
+            \qquad
+            u\to d+W^+,
+        \]
+        \[
+            s\to c+W^-,
+            \qquad
+            c\to s+W^+.
+        \]
+    \end{calculationbox}
+
+    \begin{calculationbox}[title=Diagrammatische Darstellung]
+    \begin{center}
+    \begin{tikzpicture}[scale=1.0]
+        \node[vertex] (v1) at (0,0) {};
+        \draw[boson] (-2,0) -- (v1) node[midway,above] {$W^-$};
+        \draw[fermion] (v1) -- (2,0.8) node[right] {$d$};
+        \draw[antifermion] (v1) -- (2,-0.8) node[right] {$\overline u$};
+
+        \node[vertex] (v2) at (6,0) {};
+        \draw[boson] (4,0) -- (v2) node[midway,above] {$W^-$};
+        \draw[fermion] (v2) -- (8,0.8) node[right] {$s$};
+        \draw[antifermion] (v2) -- (8,-0.8) node[right] {$\overline c$};
+    \end{tikzpicture}
+    \end{center}
+    \end{calculationbox}
+
+    \begin{answerbox}
+        Die vereinfachten Quark-Vertizes sind
+        \[
+            \boxed{W^- \leftrightarrow d+\overline u},
+            \qquad
+            \boxed{W^+ \leftrightarrow u+\overline d},
+        \]
+        sowie für die zweite Generation
+        \[
+            \boxed{W^- \leftrightarrow s+\overline c},
+            \qquad
+            \boxed{W^+ \leftrightarrow c+\overline s}.
+        \]
+    \end{answerbox}
+
+    \item \textbf{Zerfall $\pionm\to\mum+\numub$.}
+
+    \begin{calculationbox}
+        Das $\pi^-$ besteht im Quarkmodell aus
+        \[
+            \pionm = d\overline u.
+        \]
+        Die beiden Konstituenten können über den geladenen schwachen Strom annihilieren:
+        \[
+            d+\overline u \to W^-.
+        \]
+        Anschließend zerfällt das virtuelle $W^-$ in ein Myon und ein Myon-Antineutrino:
+        \[
+            W^- \to \mu^-+\overline{\nu}_\mu.
+        \]
+        Insgesamt ergibt sich:
+        \[
+            \pionm(d\overline u)\to W^- \to \mu^-+\overline{\nu}_\mu.
+        \]
+    \end{calculationbox}
+
+    \begin{calculationbox}[title=Feynman-Diagramm]
+    \begin{center}
+    \begin{tikzpicture}[scale=1.05]
+        \node[vertex] (v1) at (0,0) {};
+        \node[vertex] (v2) at (3.2,0) {};
+
+        \draw[fermion] (-2,0.9) node[left] {$d$} -- (v1);
+        \draw[antifermion] (-2,-0.9) node[left] {$\overline u$} -- (v1);
+
+        \draw[boson] (v1) -- (v2) node[midway,above] {$W^-$};
+
+        \draw[fermion] (v2) -- (5.2,0.9) node[right] {$\mu^-$};
+        \draw[antifermion] (v2) -- (5.2,-0.9) node[right] {$\overline\nu_\mu$};
+
+        \node at (-1.2,1.35) {$\pi^-$};
+    \end{tikzpicture}
+    \end{center}
+    \end{calculationbox}
+
+    \begin{answerbox}
+        Ja, der Zerfall lässt sich direkt darstellen:
+        \[
+            \boxed{\pionm(d\overline u)\to W^-\to\mu^-+\overline{\nu}_\mu.}
+        \]
+    \end{answerbox}
+
+    \item \textbf{Zerfall $\kaonm\to\mum+\numub$ ohne Quarkmischung.}
+
+    \begin{calculationbox}
+        Das $K^-$ besteht aus
+        \[
+            K^- = s\overline u.
+        \]
+        Für einen analogen Zerfall müsste am Quarkvertex gelten:
+        \[
+            s+\overline u\to W^-.
+        \]
+        In der vereinfachten Generationenstruktur ohne Quarkmischung koppelt aber
+        \[
+            W^- \leftrightarrow d+\overline u
+        \]
+        in der ersten Generation und
+        \[
+            W^- \leftrightarrow s+\overline c
+        \]
+        in der zweiten Generation.
+        Der Zustand
+        \[
+            s+\overline u
+        \]
+        mischt also zweite und erste Quarkgeneration. Ohne Quarkmischung ist dieser Vertex nicht enthalten.
+    \end{calculationbox}
+
+    \begin{answerbox}
+        Ohne Quarkmischung kann man den Zerfall
+        \[
+            \kaonm(s\overline u)\to\mu^-+\overline{\nu}_\mu
+        \]
+        mit den bisherigen Vertizes nicht darstellen, weil der benötigte Vertex
+        \[
+            \boxed{s+\overline u\to W^-}
+        \]
+        in der vereinfachten generationsdiagonalen Kopplung fehlt.
+    \end{answerbox}
+
+    \item \textbf{Rolle der Quark-Mischung.}
+
+    \begin{calculationbox}
+        In der schwachen Wechselwirkung koppelt das $u$-Quark nicht nur an ein reines $d$-Quark, sondern an den gemischten Zustand
+        \[
+            d'=d\cos\theta_c+s\sin\theta_c.
+        \]
+        Der geladene schwache Strom enthält daher sinngemäß
+        \[
+            u \leftrightarrow d'
+            =
+            u \leftrightarrow (d\cos\theta_c+s\sin\theta_c).
+        \]
+        Das bedeutet:
+        \[
+            u \leftrightarrow d
+        \]
+        ist mit Gewicht $\cos\theta_c$ erlaubt, und
+        \[
+            u \leftrightarrow s
+        \]
+        ist mit Gewicht $\sin\theta_c$ ebenfalls erlaubt, aber unterdrückt.
+        Deshalb wird der Vertex
+        \[
+            s+\overline u\to W^-
+        \]
+        möglich.
+    \end{calculationbox}
+
+    \begin{calculationbox}[title=Diagramm f\"ur den Kaonzerfall mit Cabibbo-Mischung]
+    \begin{center}
+    \begin{tikzpicture}[scale=1.05]
+        \node[vertex] (v1) at (0,0) {};
+        \node[vertex] (v2) at (3.2,0) {};
+
+        \draw[fermion] (-2,0.9) node[left] {$s$} -- (v1);
+        \draw[antifermion] (-2,-0.9) node[left] {$\overline u$} -- (v1);
+
+        \draw[boson] (v1) -- (v2) node[midway,above] {$W^-$};
+
+        \draw[fermion] (v2) -- (5.2,0.9) node[right] {$\mu^-$};
+        \draw[antifermion] (v2) -- (5.2,-0.9) node[right] {$\overline\nu_\mu$};
+
+        \node at (-1.2,1.35) {$K^-$};
+        \node at (0,-1.45) {Cabibbo-unterdr\"uckt: Faktor $\sin\theta_c$};
+    \end{tikzpicture}
+    \end{center}
+    \end{calculationbox}
+
+    \begin{answerbox}
+        Die Quarkmischung hilft genau deshalb, weil sie eine schwache Kopplung zwischen $u$ und $s$ erlaubt:
+        \[
+            \boxed{d'=d\cos\theta_c+s\sin\theta_c.}
+        \]
+        Dadurch ist
+        \[
+            \boxed{K^-(s\overline u)\to W^-\to\mu^-+\overline\nu_\mu}
+        \]
+        möglich, aber gegenüber dem Pionzerfall Cabibbo-unterdrückt.
+    \end{answerbox}
+\end{enumerate}
+
+\subsection{Tafelvortrag zu Aufgabe 1}
+
+\begin{talkbox}
+\textbf{Tafelstruktur:}
+\begin{enumerate}
+    \item Lepton-Dublett anschreiben:
+    \[
+        \begin{pmatrix}\nu_e\\ e^-\end{pmatrix},
+        \qquad
+        W^- \leftrightarrow e^-+\overline\nu_e.
+    \]
+    \item Zweite Generation:
+    \[
+        \begin{pmatrix}\nu_\mu\\ \mu^-\end{pmatrix}
+        \leftrightarrow
+        \begin{pmatrix}c\\ s\end{pmatrix}.
+    \]
+    \item Quark-Vertizes:
+    \[
+        W^-\leftrightarrow d+\overline u,
+        \qquad
+        W^-\leftrightarrow s+\overline c.
+    \]
+    \item Pion:
+    \[
+        \pi^-=(d\overline u)\to W^-\to\mu^-+\overline\nu_\mu.
+    \]
+    \item Kaon ohne Mischung: nicht möglich, weil $s\overline u W^-$ fehlt.
+    \item Kaon mit Cabibbo-Mischung:
+    \[
+        d'=d\cos\theta_c+s\sin\theta_c.
+    \]
+\end{enumerate}
+\end{talkbox}
+
+\FloatBarrier
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Aufgabe 2: Isospin-Eigenzust\"ande}
+
+\begin{taskbox}
+Wie bereits vom Namen angedeutet, lässt sich mit dem Isospin ähnlich rechnen wie mit dem normalen Spin. Hier soll dazu die Kopplung von Isospins untersucht werden.
+
+\begin{enumerate}[label=(\alph*)]
+    \item Wir betrachten Nukleonen und Pionen. Wie lauten deren Isospinquantenzahlen $(T,T_3)$?
+    \item Ein 2-Teilchensystem hat eine definierte 3-Komponente $T_3$ des Isospins, die sich direkt aus der Summe der einzelnen 3-Komponenten ergibt. Bestimmen Sie für alle Nukleon-Pion-Kombinationen den Wert für $T_3$. Bestimmen Sie auch die möglichen Werte für den Gesamtisospin.
+    \item Stellen Sie die 2-Teilchenzustände $\ket{\pi^+p}$, $\ket{\pi^-p}$ und $\ket{\pi^0n}$ in der Basis des Gesamtisospins dar.
+    \item Wie lauten die Isospin-Quantenzahlen $T,T_3$ der vier Ausprägungen der $\Delta$-Resonanz?
+    \item Betrachten Sie
+    \[
+        \pi^+ + p \to \Delta \to \pi N,
+        \qquad
+        \pi^- + p \to \Delta \to \pi N.
+    \]
+    Was ist jeweils die Ladung der Delta-Resonanz und welche möglichen Kombinationen von Pion und Nukleon $N$ ergeben sich im Ausgangskanal?
+\end{enumerate}
+\end{taskbox}
+
+\subsection{Lernteil: Isospin wie Drehimpuls}
+
+\begin{learningbox}
+Der Isospin wird formal wie ein Drehimpuls behandelt. Pionen bilden ein Isospin-Triplett:
+\[
+    T_\pi=1,
+    \qquad
+    T_3(\pi^+)=+1,\quad T_3(\pi^0)=0,\quad T_3(\pi^-)=-1.
+\]
+Nukleonen bilden ein Isospin-Dublett:
+\[
+    T_N=\frac{1}{2},
+    \qquad
+    T_3(p)=+\frac{1}{2},
+    \quad
+    T_3(n)=-\frac{1}{2}.
+\]
+Beim Zusammensetzen gilt:
+\[
+    T_3^{\mathrm{gesamt}}=T_{3,\pi}+T_{3,N}.
+\]
+Für den Gesamtisospin gilt bei Kopplung von $T_\pi=1$ und $T_N=\frac12$:
+\[
+    T_{\mathrm{gesamt}}\in
+    \left\{
+    \frac{3}{2},
+    \frac{1}{2}
+    \right\}.
+\]
+\end{learningbox}
+
+\subsection{Abgabe: Ausf\"uhrliche L\"osung}
+
+\begin{enumerate}[label=(\alph*)]
+    \item \textbf{Isospinquantenzahlen der Nukleonen und Pionen.}
+
+    \begin{calculationbox}
+        Die Pionen bilden ein Isospin-Triplett mit
+        \[
+            T=1.
+        \]
+        Die dritte Komponente ist:
+        \[
+            \pi^+:\quad (T,T_3)=(1,+1),
+        \]
+        \[
+            \pi^0:\quad (T,T_3)=(1,0),
+        \]
+        \[
+            \pi^-:\quad (T,T_3)=(1,-1).
+        \]
+
+        Die Nukleonen bilden ein Isospin-Dublett mit
+        \[
+            T=\frac12.
+        \]
+        Dabei gilt:
+        \[
+            p:\quad (T,T_3)=\left(\frac12,+\frac12\right),
+        \]
+        \[
+            n:\quad (T,T_3)=\left(\frac12,-\frac12\right).
+        \]
+    \end{calculationbox}
+
+    \begin{answerbox}
+        \[
+        \boxed{
+        \begin{array}{c|c}
+        \text{Teilchen} & (T,T_3)\\
+        \hline
+        \pi^+ & (1,+1)\\
+        \pi^0 & (1,0)\\
+        \pi^- & (1,-1)\\
+        p & \left(\frac12,+\frac12\right)\\
+        n & \left(\frac12,-\frac12\right)
+        \end{array}}
+        \]
+    \end{answerbox}
+
+    \item \textbf{$T_3$ und m\"ogliche Gesamtisospins f\"ur Pion-Nukleon-Kombinationen.}
+
+    \begin{calculationbox}
+        Für jede Kombination gilt:
+        \[
+            T_3=T_{3,\pi}+T_{3,N}.
+        \]
+        Da immer
+        \[
+            T_\pi=1,
+            \qquad
+            T_N=\frac12
+        \]
+        gekoppelt wird, sind grundsätzlich die Gesamtisospins
+        \[
+            T=\frac32
+            \quad\text{oder}\quad
+            T=\frac12
+        \]
+        möglich. Für die extremen Werte
+        \[
+            T_3=\pm\frac32
+        \]
+        kann aber nur
+        \[
+            T=\frac32
+        \]
+        auftreten, weil ein Zustand mit $T=\frac12$ nur $T_3=\pm\frac12$ besitzen kann.
+    \end{calculationbox}
+
+    \begin{calculationbox}[title=Tabelle]
+        \[
+        \begin{array}{c|c|c}
+        \text{Zustand} & T_3 & \text{m\"oglicher Gesamtisospin }T\\
+        \hline
+        \ket{\pi^+p} & +1+\frac12=+\frac32 & \frac32\\[0.2em]
+        \ket{\pi^+n} & +1-\frac12=+\frac12 & \frac32,\frac12\\[0.2em]
+        \ket{\pi^0p} & 0+\frac12=+\frac12 & \frac32,\frac12\\[0.2em]
+        \ket{\pi^0n} & 0-\frac12=-\frac12 & \frac32,\frac12\\[0.2em]
+        \ket{\pi^-p} & -1+\frac12=-\frac12 & \frac32,\frac12\\[0.2em]
+        \ket{\pi^-n} & -1-\frac12=-\frac32 & \frac32
+        \end{array}
+        \]
+    \end{calculationbox}
+
+    \begin{answerbox}
+        Die extremen Zustände
+        \[
+            \ket{\pi^+p},\qquad \ket{\pi^-n}
+        \]
+        sind reine $T=\frac32$-Zustände. Die Zustände mit
+        \[
+            T_3=\pm\frac12
+        \]
+        sind im Allgemeinen Linearkombinationen aus
+        \[
+            T=\frac32
+            \quad\text{und}\quad
+            T=\frac12.
+        \]
+    \end{answerbox}
+
+    \item \textbf{Darstellung in der Basis des Gesamtisospins.}
+
+    \begin{calculationbox}
+        Wir koppeln
+        \[
+            T_\pi=1
+            \quad\text{mit}\quad
+            T_N=\frac12.
+        \]
+        Die Gesamtzustände lauten mit Clebsch-Gordan-Koeffizienten:
+        \[
+            \ket{\frac32,\frac32}
+            =
+            \ket{\pi^+p},
+        \]
+        \[
+            \ket{\frac32,\frac12}
+            =
+            \sqrt{\frac13}\ket{\pi^+n}
+            +
+            \sqrt{\frac23}\ket{\pi^0p},
+        \]
+        \[
+            \ket{\frac12,\frac12}
+            =
+            -\sqrt{\frac23}\ket{\pi^+n}
+            +
+            \sqrt{\frac13}\ket{\pi^0p},
+        \]
+        \[
+            \ket{\frac32,-\frac12}
+            =
+            \sqrt{\frac13}\ket{\pi^-p}
+            +
+            \sqrt{\frac23}\ket{\pi^0n},
+        \]
+        \[
+            \ket{\frac12,-\frac12}
+            =
+            \sqrt{\frac23}\ket{\pi^-p}
+            -
+            \sqrt{\frac13}\ket{\pi^0n},
+        \]
+        \[
+            \ket{\frac32,-\frac32}
+            =
+            \ket{\pi^-n}.
+        \]
+    \end{calculationbox}
+
+    \begin{calculationbox}[title=Gesuchte Umkehrung]
+        Gesucht sind die Produktzustände in der Gesamtisospinbasis.
+
+        Direkt gilt:
+        \[
+            \ket{\pi^+p}
+            =
+            \ket{\frac32,\frac32}.
+        \]
+
+        Für $\ket{\pi^-p}$ und $\ket{\pi^0n}$ invertieren wir die beiden Gleichungen für $T_3=-\frac12$:
+        \[
+            \ket{\frac32,-\frac12}
+            =
+            \sqrt{\frac13}\ket{\pi^-p}
+            +
+            \sqrt{\frac23}\ket{\pi^0n},
+        \]
+        \[
+            \ket{\frac12,-\frac12}
+            =
+            \sqrt{\frac23}\ket{\pi^-p}
+            -
+            \sqrt{\frac13}\ket{\pi^0n}.
+        \]
+        Daraus folgt:
+        \[
+            \ket{\pi^-p}
+            =
+            \sqrt{\frac13}\ket{\frac32,-\frac12}
+            +
+            \sqrt{\frac23}\ket{\frac12,-\frac12},
+        \]
+        \[
+            \ket{\pi^0n}
+            =
+            \sqrt{\frac23}\ket{\frac32,-\frac12}
+            -
+            \sqrt{\frac13}\ket{\frac12,-\frac12}.
+        \]
+    \end{calculationbox}
+
+    \begin{answerbox}
+        Die gesuchten Zerlegungen sind
+        \[
+            \boxed{
+            \ket{\pi^+p}
+            =
+            \ket{\frac32,\frac32}}
+        \]
+        \[
+            \boxed{
+            \ket{\pi^-p}
+            =
+            \sqrt{\frac13}\ket{\frac32,-\frac12}
+            +
+            \sqrt{\frac23}\ket{\frac12,-\frac12}}
+        \]
+        \[
+            \boxed{
+            \ket{\pi^0n}
+            =
+            \sqrt{\frac23}\ket{\frac32,-\frac12}
+            -
+            \sqrt{\frac13}\ket{\frac12,-\frac12}}
+        \]
+        bis auf eine globale Phasenkonvention der Clebsch-Gordan-Koeffizienten.
+    \end{answerbox}
+
+    \item \textbf{Isospin der $\Delta$-Resonanz.}
+
+    \begin{calculationbox}
+        Die $\Delta$-Resonanz tritt in vier Ladungszuständen auf:
+        \[
+            \Delta^{++},\quad \Delta^+,\quad \Delta^0,\quad \Delta^-.
+        \]
+        Vier Zustände bedeuten ein Isospin-Multiplett mit
+        \[
+            2T+1=4.
+        \]
+        Also:
+        \[
+            T=\frac32.
+        \]
+        Die zugehörigen $T_3$-Werte sind:
+        \[
+            +\frac32,\quad +\frac12,\quad -\frac12,\quad -\frac32.
+        \]
+    \end{calculationbox}
+
+    \begin{answerbox}
+        \[
+        \boxed{
+        \begin{array}{c|c}
+        \Delta\text{-Zustand} & (T,T_3)\\
+        \hline
+        \Delta^{++} & \left(\frac32,+\frac32\right)\\[0.2em]
+        \Delta^+ & \left(\frac32,+\frac12\right)\\[0.2em]
+        \Delta^0 & \left(\frac32,-\frac12\right)\\[0.2em]
+        \Delta^- & \left(\frac32,-\frac32\right)
+        \end{array}}
+        \]
+    \end{answerbox}
+
+    \item \textbf{$\pi p$-Streuung \"uber die $\Delta$-Resonanz.}
+
+    \begin{calculationbox}
+        Zuerst betrachten wir
+        \[
+            \pi^+ + p.
+        \]
+        Die Ladung ist
+        \[
+            Q_{\mathrm{ges}}=Q(\pi^+)+Q(p)=+1+1=+2.
+        \]
+        Daher muss die Resonanz die Ladung
+        \[
+            Q=+2
+        \]
+        haben:
+        \[
+            \pi^+p\to\Delta^{++}.
+        \]
+        Außerdem gilt
+        \[
+            T_3=+\frac32.
+        \]
+        Der einzige Pion-Nukleon-Endzustand mit Ladung $+2$ ist
+        \[
+            \pi^+p.
+        \]
+        Deshalb gibt es hier nur den elastischen Kanal:
+        \[
+            \pi^+p\to\Delta^{++}\to\pi^+p.
+        \]
+    \end{calculationbox}
+
+    \begin{calculationbox}
+        Nun betrachten wir
+        \[
+            \pi^-+p.
+        \]
+        Die Ladung ist
+        \[
+            Q_{\mathrm{ges}}=Q(\pi^-)+Q(p)=-1+1=0.
+        \]
+        Daher muss die Resonanz elektrisch neutral sein:
+        \[
+            \pi^-p\to\Delta^0.
+        \]
+        Für den Ausgangskanal $\pi N$ mit Gesamtladung $0$ gibt es zwei Möglichkeiten:
+        \[
+            \pi^-p,
+            \qquad
+            \pi^0 n.
+        \]
+        Also gibt es:
+        \[
+            \pi^-p\to\Delta^0\to\pi^-p
+        \]
+        als elastischen Kanal und
+        \[
+            \pi^-p\to\Delta^0\to\pi^0n
+        \]
+        als inelastischen beziehungsweise Ladungsaustausch-Kanal.
+    \end{calculationbox}
+
+    \begin{answerbox}
+        Für
+        \[
+            \boxed{\pi^+p}
+        \]
+        entsteht
+        \[
+            \boxed{\Delta^{++}}
+        \]
+        und der einzige $\pi N$-Ausgangskanal ist
+        \[
+            \boxed{\pi^+p}
+        \]
+        also elastische Streuung.
+
+        Für
+        \[
+            \boxed{\pi^-p}
+        \]
+        entsteht
+        \[
+            \boxed{\Delta^0}
+        \]
+        und die möglichen Ausgangskanäle sind
+        \[
+            \boxed{\pi^-p}
+            \qquad\text{und}\qquad
+            \boxed{\pi^0n}.
+        \]
+    \end{answerbox}
+\end{enumerate}
+
+\subsection{Tafelvortrag zu Aufgabe 2}
+
+\begin{talkbox}
+\textbf{Tafelstruktur:}
+\begin{enumerate}
+    \item Pion- und Nukleon-Multipletts:
+    \[
+        \pi:\ T=1,
+        \qquad
+        N:\ T=\frac12.
+    \]
+    \item Kopplung:
+    \[
+        1\otimes\frac12=\frac32\oplus\frac12.
+    \]
+    \item Tabelle der $T_3$-Werte.
+    \item Wichtige Zustände:
+    \[
+        \ket{\pi^+p}=\ket{\frac32,\frac32}.
+    \]
+    \[
+        \ket{\pi^-p}
+        =
+        \sqrt{\frac13}\ket{\frac32,-\frac12}
+        +
+        \sqrt{\frac23}\ket{\frac12,-\frac12}.
+    \]
+    \[
+        \ket{\pi^0n}
+        =
+        \sqrt{\frac23}\ket{\frac32,-\frac12}
+        -
+        \sqrt{\frac13}\ket{\frac12,-\frac12}.
+    \]
+    \item $\Delta$-Resonanz:
+    \[
+        T_\Delta=\frac32.
+    \]
+    \item Reaktionskanäle:
+    \[
+        \pi^+p\to\Delta^{++}\to\pi^+p,
+    \]
+    \[
+        \pi^-p\to\Delta^0\to\pi^-p
+        \quad\text{oder}\quad
+        \pi^-p\to\Delta^0\to\pi^0n.
+    \]
+\end{enumerate}
+\end{talkbox}
+
+\FloatBarrier
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Aufgabe 3: Erhaltungss\"atze}
+
+\begin{taskbox}
+Werden bei den folgenden Zerfällen/Reaktionen Erhaltungssätze verletzt? Wenn ja, welche? Überprüfen Sie hier nur die Erhaltung von:
+\begin{enumerate}
+    \item Ladung,
+    \item Viererimpuls,
+    \item Drehimpuls,
+    \item Leptonenzahl,
+    \item Baryonenzahl.
+\end{enumerate}
+
+\begin{enumerate}[label=(\alph*)]
+    \item $n\to p+\pi^-$
+    \item $\Lambda^0\to\overline p+\pi^+$
+    \item $p\to\pi^0+e^+$
+    \item $\nu_e+p\to n+e^+$
+    \item $\pi^+\to e^+ + \nu_e+\gamma$
+    \item $\pi^-\to\mu^-+\overline\nu_e$
+\end{enumerate}
+\end{taskbox}
+
+\subsection{Lernteil: Systematische Pr\"ufung}
+
+\begin{learningbox}
+Bei solchen Aufgaben sollte man nicht raten, sondern eine Tabelle machen:
+\[
+    Q,\qquad p^\mu,\qquad J,\qquad L,\qquad B.
+\]
+Für den Viererimpuls bei einem Zerfall in Ruhe ist besonders wichtig:
+\[
+    m_{\mathrm{initial}}c^2
+    \ge
+    \sum_i m_{\mathrm{final},i}c^2.
+\]
+Falls die Endteilchen schwerer sind als das Anfangsteilchen, kann der Zerfall nicht stattfinden, weil Energie-Impuls-Erhaltung verletzt wäre.
+\end{learningbox}
+
+\begin{notebox}[title=Benutzte Massen und Quantenzahlen]
+Für die kinematischen Abschätzungen verwenden wir ungefähr:
+\[
+    m_n=\SI{939.6}{MeV},
+    \qquad
+    m_p=\SI{938.3}{MeV},
+    \qquad
+    m_{\pi^\pm}=\SI{139.6}{MeV},
+\]
+\[
+    m_{\pi^0}=\SI{135.0}{MeV},
+    \qquad
+    m_\mu=\SI{105.7}{MeV},
+    \qquad
+    m_e=\SI{0.511}{MeV},
+\]
+\[
+    m_{\Lambda^0}=\SI{1115.7}{MeV}.
+\]
+Spins:
+\[
+    J(n)=J(p)=J(\Lambda^0)=\frac12,
+    \qquad
+    J(\pi)=0,
+    \qquad
+    J(e)=J(\mu)=J(\nu)=\frac12,
+    \qquad
+    J(\gamma)=1.
+\]
+\end{notebox}
+
+\subsection{Abgabe: Ausf\"uhrliche L\"osung}
+
+\begin{enumerate}[label=(\alph*)]
+    \item \textbf{$n\to p+\pi^-$.}
+
+    \begin{calculationbox}
+        Ladung:
+        \[
+            Q_{\mathrm{links}}=0,
+            \qquad
+            Q_{\mathrm{rechts}}=+1-1=0.
+        \]
+        Ladung ist erhalten.
+
+        Viererimpuls beziehungsweise Energie im Ruhesystem:
+        \[
+            m_n=\SI{939.6}{MeV},
+        \]
+        aber
+        \[
+            m_p+m_{\pi^-}
+            =
+            \SI{938.3}{MeV}+\SI{139.6}{MeV}
+            =
+            \SI{1077.9}{MeV}.
+        \]
+        Da
+        \[
+            939.6<1077.9,
+        \]
+        ist der Endzustand schwerer als das Neutron. Der Zerfall ist kinematisch verboten.
+
+        Drehimpuls:
+        \[
+            \frac12 \to \frac12+0
+        \]
+        kann zum Beispiel mit Bahndrehimpuls $L_{\mathrm{orb}}=0$ erhalten werden.
+
+        Leptonenzahl:
+        \[
+            L_{\mathrm{links}}=0,
+            \qquad
+            L_{\mathrm{rechts}}=0.
+        \]
+        Baryonenzahl:
+        \[
+            B_{\mathrm{links}}=1,
+            \qquad
+            B_{\mathrm{rechts}}=1+0=1.
+        \]
+    \end{calculationbox}
+
+    \begin{answerbox}
+        Bei
+        \[
+            n\to p+\pi^-
+        \]
+        sind Ladung, Drehimpuls, Leptonenzahl und Baryonenzahl erhalten. Verletzt ist aber die Energie-Impuls-Erhaltung, weil
+        \[
+            \boxed{m_n<m_p+m_{\pi^-}}.
+        \]
+    \end{answerbox}
+
+    \item \textbf{$\Lambda^0\to\overline p+\pi^+$.}
+
+    \begin{calculationbox}
+        Ladung:
+        \[
+            Q_{\mathrm{links}}=0,
+            \qquad
+            Q_{\mathrm{rechts}}=-1+1=0.
+        \]
+        Ladung ist erhalten.
+
+        Viererimpuls:
+        \[
+            m_{\Lambda^0}=\SI{1115.7}{MeV},
+        \]
+        \[
+            m_{\overline p}+m_{\pi^+}
+            =
+            \SI{938.3}{MeV}+\SI{139.6}{MeV}
+            =
+            \SI{1077.9}{MeV}.
+        \]
+        Da
+        \[
+            1115.7>1077.9,
+        \]
+        ist der Zerfall kinematisch möglich.
+
+        Drehimpuls:
+        \[
+            \frac12\to\frac12+0
+        \]
+        kann erhalten werden.
+
+        Leptonenzahl:
+        \[
+            L_{\mathrm{links}}=0,
+            \qquad
+            L_{\mathrm{rechts}}=0.
+        \]
+        Baryonenzahl:
+        \[
+            B_{\mathrm{links}}=+1,
+            \qquad
+            B_{\mathrm{rechts}}=B(\overline p)+B(\pi^+)=-1+0=-1.
+        \]
+        Also ist die Baryonenzahl verletzt.
+    \end{calculationbox}
+
+    \begin{answerbox}
+        Bei
+        \[
+            \Lambda^0\to\overline p+\pi^+
+        \]
+        sind Ladung, Viererimpuls, Drehimpuls und Leptonenzahl erhalten. Verletzt ist
+        \[
+            \boxed{\text{Baryonenzahl: }+1\to -1.}
+        \]
+    \end{answerbox}
+
+    \item \textbf{$p\to\pi^0+e^+$.}
+
+    \begin{calculationbox}
+        Ladung:
+        \[
+            Q_{\mathrm{links}}=+1,
+            \qquad
+            Q_{\mathrm{rechts}}=0+1=+1.
+        \]
+        Ladung ist erhalten.
+
+        Viererimpuls:
+        \[
+            m_p=\SI{938.3}{MeV},
+        \]
+        \[
+            m_{\pi^0}+m_{e^+}
+            =
+            \SI{135.0}{MeV}+\SI{0.511}{MeV}
+            =
+            \SI{135.5}{MeV}.
+        \]
+        Kinematisch wäre der Zerfall also möglich.
+
+        Drehimpuls:
+        \[
+            \frac12\to0+\frac12
+        \]
+        kann erhalten werden.
+
+        Leptonenzahl:
+        \[
+            L_{\mathrm{links}}=0,
+            \qquad
+            L_{\mathrm{rechts}}=L(e^+)=-1.
+        \]
+        Also ist die Leptonenzahl verletzt.
+
+        Baryonenzahl:
+        \[
+            B_{\mathrm{links}}=1,
+            \qquad
+            B_{\mathrm{rechts}}=0+0=0.
+        \]
+        Also ist die Baryonenzahl verletzt.
+    \end{calculationbox}
+
+    \begin{answerbox}
+        Bei
+        \[
+            p\to\pi^0+e^+
+        \]
+        sind Ladung, Viererimpuls und Drehimpuls nicht das Problem. Verletzt sind
+        \[
+            \boxed{\text{Leptonenzahl}}
+            \qquad\text{und}\qquad
+            \boxed{\text{Baryonenzahl}}.
+        \]
+    \end{answerbox}
+
+    \item \textbf{$\nu_e+p\to n+e^+$.}
+
+    \begin{calculationbox}
+        Ladung:
+        \[
+            Q_{\mathrm{links}}=0+1=+1,
+            \qquad
+            Q_{\mathrm{rechts}}=0+1=+1.
+        \]
+        Ladung ist erhalten.
+
+        Viererimpuls:
+        Diese Reaktion ist eine Streureaktion. Kinematisch ist sie möglich, wenn das Neutrino genügend Energie mitbringt. Die Schwelle ergibt sich aus der Massendifferenz:
+        \[
+            m_n+m_e-m_p
+            \approx
+            \SI{939.6}{MeV}+\SI{0.511}{MeV}-\SI{938.3}{MeV}
+            \approx
+            \SI{1.8}{MeV}.
+        \]
+        Also ist Viererimpulserhaltung nicht grundsätzlich verboten, aber es gibt eine Energieschwelle.
+
+        Drehimpuls:
+        \[
+            \frac12+\frac12\to\frac12+\frac12
+        \]
+        kann durch geeignete Spin- und Bahndrehimpulskopplung erhalten werden.
+
+        Leptonenzahl:
+        \[
+            L_{\mathrm{links}}=L(\nu_e)=+1,
+        \]
+        \[
+            L_{\mathrm{rechts}}=L(e^+)=-1.
+        \]
+        Also ist die elektronische Leptonenzahl verletzt.
+
+        Baryonenzahl:
+        \[
+            B_{\mathrm{links}}=0+1=1,
+            \qquad
+            B_{\mathrm{rechts}}=1+0=1.
+        \]
+        Baryonenzahl ist erhalten.
+    \end{calculationbox}
+
+    \begin{answerbox}
+        Bei
+        \[
+            \nu_e+p\to n+e^+
+        \]
+        sind Ladung, Baryonenzahl und Drehimpuls unproblematisch. Viererimpulserhaltung ist möglich, wenn genug Neutrinoenergie vorhanden ist. Verletzt ist aber
+        \[
+            \boxed{\text{elektronische Leptonenzahl: }+1\to -1.}
+        \]
+        Der erlaubte verwandte Prozess wäre stattdessen
+        \[
+            \overline{\nu}_e+p\to n+e^+.
+        \]
+    \end{answerbox}
+
+    \item \textbf{$\pi^+\to e^+ + \nu_e+\gamma$.}
+
+    \begin{calculationbox}
+        Ladung:
+        \[
+            Q_{\mathrm{links}}=+1,
+            \qquad
+            Q_{\mathrm{rechts}}=+1+0+0=+1.
+        \]
+        Ladung ist erhalten.
+
+        Viererimpuls:
+        \[
+            m_{\pi^+}=\SI{139.6}{MeV}
+        \]
+        ist deutlich größer als
+        \[
+            m_e\approx\SI{0.511}{MeV},
+        \]
+        und Neutrino sowie Photon sind praktisch masselos. Der Zerfall ist kinematisch möglich.
+
+        Drehimpuls:
+        Das Pion hat Spin $0$. Im Endzustand gibt es ein Positron, ein Neutrino und ein Photon. Durch Spin- und Bahndrehimpulskopplung kann Gesamt-$J=0$ erreicht werden. Drehimpuls ist daher nicht offensichtlich verletzt.
+
+        Leptonenzahl:
+        \[
+            L_{\mathrm{links}}=0.
+        \]
+        Rechts gilt:
+        \[
+            L(e^+)=-1,
+            \qquad
+            L(\nu_e)=+1,
+            \qquad
+            L(\gamma)=0.
+        \]
+        Also:
+        \[
+            L_{\mathrm{rechts}}=-1+1+0=0.
+        \]
+        Leptonenzahl ist erhalten.
+
+        Baryonenzahl:
+        \[
+            B_{\mathrm{links}}=0,
+            \qquad
+            B_{\mathrm{rechts}}=0.
+        \]
+    \end{calculationbox}
+
+    \begin{answerbox}
+        Bei
+        \[
+            \pi^+\to e^+ + \nu_e+\gamma
+        \]
+        wird keiner der geforderten Erhaltungssätze verletzt. Es handelt sich um einen radiativen Pionzerfall:
+        \[
+            \boxed{\text{nach den geforderten Kriterien erlaubt.}}
+        \]
+    \end{answerbox}
+
+    \item \textbf{$\pi^-\to\mu^-+\overline\nu_e$.}
+
+    \begin{calculationbox}
+        Ladung:
+        \[
+            Q_{\mathrm{links}}=-1,
+            \qquad
+            Q_{\mathrm{rechts}}=-1+0=-1.
+        \]
+        Ladung ist erhalten.
+
+        Viererimpuls:
+        \[
+            m_{\pi^-}=\SI{139.6}{MeV},
+            \qquad
+            m_\mu=\SI{105.7}{MeV}.
+        \]
+        Da das Antineutrino praktisch masselos ist,
+        \[
+            139.6>105.7,
+        \]
+        ist der Zerfall kinematisch möglich.
+
+        Drehimpuls:
+        Ein Pion hat Spin $0$. Das Myon und das Antineutrino haben jeweils Spin $\frac12$. Die Spins können zu Gesamtspin $0$ gekoppelt werden. Drehimpuls kann also erhalten werden.
+
+        Gesamtleptonenzahl:
+        \[
+            L_{\mathrm{links}}=0.
+        \]
+        Rechts:
+        \[
+            L(\mu^-)=+1,
+            \qquad
+            L(\overline\nu_e)=-1.
+        \]
+        Also:
+        \[
+            L_{\mathrm{rechts}}=+1-1=0.
+        \]
+        Die Gesamtleptonenzahl ist also erhalten.
+
+        Betrachtet man aber die Familienleptonenzahlen getrennt, gilt:
+        \[
+            L_\mu:\quad 0\to +1,
+        \]
+        \[
+            L_e:\quad 0\to -1.
+        \]
+        Die Leptonfamilienzahlen sind daher verletzt. Der bekannte erlaubte Zerfall wäre
+        \[
+            \pi^-\to\mu^-+\overline\nu_\mu.
+        \]
+
+        Baryonenzahl:
+        \[
+            B_{\mathrm{links}}=0,
+            \qquad
+            B_{\mathrm{rechts}}=0.
+        \]
+    \end{calculationbox}
+
+    \begin{answerbox}
+        Bei
+        \[
+            \pi^-\to\mu^-+\overline\nu_e
+        \]
+        sind Ladung, Viererimpuls, Drehimpuls, Gesamtleptonenzahl und Baryonenzahl erhalten. Wenn mit \enquote{Leptonenzahl} die getrennten Leptonfamilienzahlen gemeint sind, dann ist der Prozess verboten, weil
+        \[
+            \boxed{L_\mu\text{ und }L_e\text{ verletzt werden}.}
+        \]
+        Der Standardmodell-Zerfall lautet
+        \[
+            \boxed{\pi^-\to\mu^-+\overline\nu_\mu.}
+        \]
+    \end{answerbox}
+\end{enumerate}
+
+\subsection{Tafelvortrag zu Aufgabe 3}
+
+\begin{talkbox}
+\textbf{Tafelstruktur:}
+\begin{enumerate}
+    \item Immer dieselben fünf Spalten verwenden:
+    \[
+        Q,\quad p^\mu,\quad J,\quad L,\quad B.
+    \]
+    \item Bei Zerfällen in Ruhe zuerst Massenschwelle prüfen:
+    \[
+        m_{\mathrm{initial}}\ge\sum m_{\mathrm{final}}.
+    \]
+    \item Wichtigste Ergebnisse:
+    \[
+        n\to p+\pi^-:
+        \quad
+        \text{verletzt Viererimpuls/Energie, weil }m_n<m_p+m_\pi.
+    \]
+    \[
+        \Lambda^0\to\overline p+\pi^+:
+        \quad
+        \text{verletzt Baryonenzahl.}
+    \]
+    \[
+        p\to\pi^0+e^+:
+        \quad
+        \text{verletzt Leptonenzahl und Baryonenzahl.}
+    \]
+    \[
+        \nu_e+p\to n+e^+:
+        \quad
+        \text{verletzt elektronische Leptonenzahl.}
+    \]
+    \[
+        \pi^+\to e^+ + \nu_e+\gamma:
+        \quad
+        \text{nach den geforderten Kriterien erlaubt.}
+    \]
+    \[
+        \pi^-\to\mu^-+\overline\nu_e:
+        \quad
+        \text{Gesamt-}L\text{ erhalten, aber Leptonfamilienzahlen verletzt.}
+    \]
+\end{enumerate}
+\end{talkbox}
+
+\FloatBarrier
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Gesamtzusammenfassung f\"ur die Pr\"ufung}
+
+\begin{summarybox}[title=Aufgabe 1: Schwache Vertizes]
+\[
+    W^- \leftrightarrow \ell^-+\overline\nu_\ell,
+    \qquad
+    W^+ \leftrightarrow \ell^+ + \nu_\ell.
+\]
+\[
+    W^- \leftrightarrow d+\overline u,
+    \qquad
+    W^+ \leftrightarrow u+\overline d.
+\]
+\[
+    W^- \leftrightarrow s+\overline c,
+    \qquad
+    W^+ \leftrightarrow c+\overline s.
+\]
+\[
+    \pi^-=(d\overline u)\to W^-\to\mu^-+\overline\nu_\mu.
+\]
+\[
+    K^-=(s\overline u)\to W^-\to\mu^-+\overline\nu_\mu
+\]
+ist ohne Quarkmischung nicht möglich. Mit
+\[
+    d'=d\cos\theta_c+s\sin\theta_c
+\]
+wird der Prozess möglich, aber Cabibbo-unterdrückt.
+\end{summarybox}
+
+\begin{summarybox}[title=Aufgabe 2: Isospin]
+\[
+    T_\pi=1,
+    \qquad
+    T_N=\frac12,
+    \qquad
+    1\otimes\frac12=\frac32\oplus\frac12.
+\]
+\[
+    \ket{\pi^+p}=\ket{\frac32,\frac32}.
+\]
+\[
+    \ket{\pi^-p}
+    =
+    \sqrt{\frac13}\ket{\frac32,-\frac12}
+    +
+    \sqrt{\frac23}\ket{\frac12,-\frac12}.
+\]
+\[
+    \ket{\pi^0n}
+    =
+    \sqrt{\frac23}\ket{\frac32,-\frac12}
+    -
+    \sqrt{\frac13}\ket{\frac12,-\frac12}.
+\]
+\[
+    \Delta^{++},\Delta^+,\Delta^0,\Delta^-
+    \quad\text{bilden ein }T=\frac32\text{-Quartett.}
+\]
+\end{summarybox}
+
+\begin{summarybox}[title=Aufgabe 3: Erhaltungss\"atze]
+\[
+\begin{array}{c|l}
+\text{Prozess} & \text{Problem}\\
+\hline
+n\to p+\pi^- & \text{Energie-Impuls-Erhaltung verletzt}\\
+\Lambda^0\to\overline p+\pi^+ & \text{Baryonenzahl verletzt}\\
+p\to\pi^0+e^+ & \text{Leptonenzahl und Baryonenzahl verletzt}\\
+\nu_e+p\to n+e^+ & \text{elektronische Leptonenzahl verletzt}\\
+\pi^+\to e^+ + \nu_e+\gamma & \text{kein geforderter Erhaltungssatz verletzt}\\
+\pi^-\to\mu^-+\overline\nu_e & \text{Leptonfamilienzahlen verletzt}
+\end{array}
+\]
+\end{summarybox}
+
+\begin{warningbox}[title=Typische Fehler]
+\begin{itemize}
+    \item Beim schwachen Vertex darf man nicht nur Ladung betrachten; auch Teilchenfamilie und Antiteilchenrichtung müssen passen.
+    \item $K^-=(s\overline u)$ ist ohne Quarkmischung nicht analog zu $\pi^-=(d\overline u)$, weil $s$ und $u$ aus verschiedenen Generationen stammen.
+    \item Beim Isospin ist $\ket{\pi^+p}$ ein reiner $T=\frac32$-Zustand, weil $T_3=+\frac32$ maximal ist.
+    \item Die $\Delta$-Resonanz hat vier Ladungszustände, daher $2T+1=4$ und somit $T=\frac32$.
+    \item Bei Erhaltungssätzen muss man zwischen Gesamtleptonenzahl und Leptonfamilienzahl unterscheiden.
+    \item Bei Zerfällen in Ruhe immer prüfen, ob die Endteilchen überhaupt leichter als das Anfangsteilchen sind.
+\end{itemize}
+\end{warningbox}
+
+\end{document}
